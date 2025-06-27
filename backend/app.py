@@ -11,7 +11,7 @@ from functools import wraps
 app = Flask(__name__, static_folder='../frontend', template_folder='../frontend')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///estoque.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'sua-chave-secreta-aqui-mude-em-producao'
+app.config['SECRET_KEY'] = 'a304a20d77990610cab17a2d460279b2e17148ded38bb28055fdd13528c5caae'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)
 
 db = SQLAlchemy(app)

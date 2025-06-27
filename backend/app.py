@@ -345,24 +345,10 @@ def exportar_relatorio():
         'caminho': caminho_arquivo
     })
 
-# Inicialização do banco de dados
-@app.before_first_request
-def criar_tabelas():
-    db.create_all()
-    
-    # Criar usuário administrador padrão se não existir
-    admin = Usuario.query.filter_by(email='admin@sistema.com').first()
-    if not admin:
-        admin = Usuario(
-            nome='Administrador',
-            email='admin@sistema.com'
-        )
-        admin.definir_senha('admin123')
-        db.session.add(admin)
-        db.session.commit()
-        print("Usuário administrador criado: admin@sistema.com / admin123")
-
-if __name__ == '__main__':
+# The initialization logic should be called within the application context
+# when the application starts, not necessarily tied to a request decorator.
+# This ensures it runs only once.
+def initialize_app():
     with app.app_context():
         db.create_all()
         
@@ -377,6 +363,7 @@ if __name__ == '__main__':
             db.session.add(admin)
             db.session.commit()
             print("Usuário administrador criado: admin@sistema.com / admin123")
-    
-    app.run(host='0.0.0.0', port=5000, debug=True)
 
+if __name__ == '__main__':
+    initialize_app() # Call the initialization function here
+    app.run(host='0.0.0.0', port=5000, debug=True)
